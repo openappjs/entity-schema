@@ -9,8 +9,8 @@ function EntitySchema (schema, options) {
   debug("constructor", schema, options);
 
   // check schema
-  if (typeof schema !== 'object') {
-    var err = new Error('schema given is not an object.')
+  if (!EntitySchema.isEntitySchema(schema)) {
+    var err = new Error('schema given is not a schema.')
     err.schema = schema;
     throw err;
   }
