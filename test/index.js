@@ -45,8 +45,7 @@ describe("#EntitySchema", function () {
     expect(personSchema).to.have.property("use", EntitySchema.prototype.use);
   });
 
-  describe("Type.isType()", function () {
-    var personSchema;
+  describe("EntitySchema.isEntitySchema()", function () {
 
     before(function () {
       personSchema = EntitySchema(person.schema);
