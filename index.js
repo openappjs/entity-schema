@@ -1,12 +1,12 @@
 var debug = require('debug')('entity-schema');
 
-function EntitySchema (schema, options) {
+function EntitySchema (schema) {
   // call new constructor if not already
   if (!(this instanceof EntitySchema)) {
-    return new EntitySchema(schema, options);
+    return new EntitySchema(schema);
   }
 
-  debug("constructor", schema, options);
+  debug("constructor", schema);
 
   // check schema
   if (!EntitySchema.isEntitySchema(schema)) {
@@ -16,11 +16,18 @@ function EntitySchema (schema, options) {
   }
 
   // save schema
-  this.schema = schema;
-  
+  Object.keys(schema).forEach(function (key) {
+    this[key] = schema[key];
+  }.bind(this));
+
+  // if has properties, default to type object
+  if (schema.properties) {
+    this.type = schema.type || "object";
+  }
+
   // save options
   // with default of empty object
-  this.options = options || {};
+  this.options = schema.options || {};
 }
 
 // prototype function to handle plugin functions

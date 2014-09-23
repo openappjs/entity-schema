@@ -1,26 +1,23 @@
 var expect = require('chai').expect;
 
-var person = {
-  schema: {
-    id: "Person",
-    prefixes: {
-      "": "http://schema.org/",
-      foaf: "http://xmlns.com/foaf/0.1/",
-      org: "http://www.w3.org/TR/vocab-org#",
+var personSchema = {
+  id: "Person",
+  prefixes: {
+    "": "http://schema.org/",
+    foaf: "http://xmlns.com/foaf/0.1/",
+    org: "http://www.w3.org/TR/vocab-org#",
+  },
+  properties: {
+    name: {
+      type: "string",
+      context: "foaf:name",
     },
-    type: 'object',
-    properties: {
-      name: {
-        type: "string",
-        context: "foaf:name",
-      },
-      memberships: {
-        type: "array",
-        context: "org:hasMembership",
-        items: {
-          reverse: "member",
-          $ref: "Membership",
-        },
+    memberships: {
+      type: "array",
+      context: "org:hasMembership",
+      items: {
+        reverse: "member",
+        $ref: "Membership",
       },
     },
   },
@@ -37,18 +34,21 @@ describe("#EntitySchema", function () {
   });
 
   it("should create person schema", function () {
-    var personSchema = EntitySchema(person.schema);
-    expect(personSchema).to.exist;
-    expect(personSchema).to.have.property("schema", person.schema);
-    expect(personSchema).to.have.property("options")
+    var personEntitySchema = EntitySchema(personSchema);
+    expect(personEntitySchema).to.exist;
+    expect(personEntitySchema).to.have.property("id", personSchema.id);
+    expect(personEntitySchema).to.have.property("properties", personSchema.properties);
+    expect(personEntitySchema).to.have.property("prefixes", personSchema.prefixes);
+    expect(personEntitySchema).to.have.property("options")
       .that.deep.equals({});
-    expect(personSchema).to.have.property("use", EntitySchema.prototype.use);
+    expect(personEntitySchema).to.have.property("use", EntitySchema.prototype.use);
   });
 
   describe("EntitySchema.isEntitySchema()", function () {
+    var personEntitySchema;
 
     before(function () {
-      personSchema = EntitySchema(person.schema);
+      personEntitySchema = EntitySchema(personSchema);
     });
 
     it("of personSchema should be true", function () {
