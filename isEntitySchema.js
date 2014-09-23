@@ -5,7 +5,6 @@ module.exports = function isEntitySchema (schema) {
 
   return !!(
     typeof schema === 'object' &&
-    typeof schema.id === 'string' &&
     (
       typeof schema.properties === 'object' ||
       typeof schema.$ref === 'string'
