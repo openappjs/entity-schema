@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/openappjs/entity-schema",
   "dependencies": {
-    "debug": "^1.0.4"
+    "debug": "^1.0.4",
+    "schema-is-schema": "^1.2.2"
   },
   "devDependencies": {
     "chai": "^1.9.1",
